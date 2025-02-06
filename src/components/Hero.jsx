@@ -1,22 +1,37 @@
 import gsap from "gsap";
+// animation library for applying the animations 
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/all";
+// custom hook from gsap to alter the html elements shapeduring animation
+import { ScrollTrigger, ScrollSmoother } from "gsap/all";
+// plugin to trigger the animation while scrolling alone
+
 import { TiLocationArrow } from "react-icons/ti";
 import { useEffect, useRef, useState } from "react";
 
 import Button from "./Button";
 import VideoPreview from "./VideoPreview";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger,ScrollSmoother);
 
 const Hero = () => {
+    //state variables to control the audio and video in the navbar and her section
+
+    // the video index to track what video is playing currently on the hero section
   const [currentIndex, setCurrentIndex] = useState(1);
+    // to track if the miniplayer is clicked to play the next video
   const [hasClicked, setHasClicked] = useState(false);
 
+//   loading of the videos at start since it takes some time to load the video
   const [loading, setLoading] = useState(true);
+//   if this is true, and the nextwork is pretty slow for the videos to load, three dots appeas and 
+// spins in the center of the screen untill the video is loaded
+
+
+
   const [loadedVideos, setLoadedVideos] = useState(0);
 
-  const totalVideos = 4;
+  const totalVideos = 4;    
+//   to target the video Frame 
   const nextVdRef = useRef(null);
 
   const handleVideoLoad = () => {
@@ -29,16 +44,22 @@ const Hero = () => {
     }
   }, [loadedVideos]);
 
+
+//   function that handles the mini video that should be played
   const handleMiniVdClick = () => {
     setHasClicked(true);
 
     setCurrentIndex((prevIndex) => (prevIndex % totalVideos) + 1);
   };
 
+
+//   this hooks works similar to the useEffect hook runs the code when the dependencies changes
   useGSAP(
     () => {
       if (hasClicked) {
+        // final effect of the next-video after clicked
         gsap.set("#next-video", { visibility: "visible" });
+        // applies the animation to the next vide that is going to be played from the mini player
         gsap.to("#next-video", {
           transformOrigin: "center center",
           scale: 1,
@@ -48,6 +69,7 @@ const Hero = () => {
           ease: "power1.inOut",
           onStart: () => nextVdRef.current.play(),
         });
+        // applies the animation from the current video playing in the background
         gsap.from("#current-video", {
           transformOrigin: "center center",
           scale: 0,
@@ -80,9 +102,12 @@ const Hero = () => {
     });
   });
 
+//   the function the returns the src (path of the video given index)
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
 
   return (
+    // z-is the third dimension
+    // dvh is dynamic view port that adjusts the view ports value based on the screen sized even if the vport itself is unchanged
     <div className="relative h-dvh w-screen overflow-x-hidden">
       {loading && (
         <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
@@ -140,7 +165,7 @@ const Hero = () => {
           />
         </div>
 
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 text-blue-75">
+        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 text-blue-100">
           G<b>A</b>MING
         </h1>
 
