@@ -92,7 +92,7 @@ const Hero = () => {
     gsap.from("#video-frame", {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
       borderRadius: "0% 0% 0% 0%",
-      ease: "power1.inOut",
+      ease: "power2.inOut",
       scrollTrigger: {
         trigger: "#video-frame",
         start: "center center",
@@ -126,11 +126,13 @@ const Hero = () => {
       >
         <div>
           <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
+          
             <VideoPreview>
               <div
                 onClick={handleMiniVdClick}
                 className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
               >
+                
                 <video
                   ref={nextVdRef}
                   src={getVideoSrc((currentIndex % totalVideos) + 1)}
@@ -163,6 +165,7 @@ const Hero = () => {
             className="absolute left-0 top-0 size-full object-cover object-center"
             onLoadedData={handleVideoLoad}
           />
+
         </div>
 
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 text-blue-100">
