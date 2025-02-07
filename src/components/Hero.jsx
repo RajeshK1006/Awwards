@@ -2,7 +2,7 @@ import gsap from "gsap";
 // animation library for applying the animations 
 import { useGSAP } from "@gsap/react";
 // custom hook from gsap to alter the html elements shapeduring animation
-import { ScrollTrigger, ScrollSmoother } from "gsap/all";
+import { ScrollTrigger } from "gsap/all";
 // plugin to trigger the animation while scrolling alone
 
 import { TiLocationArrow } from "react-icons/ti";
@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import VideoPreview from "./VideoPreview";
 
-gsap.registerPlugin(ScrollTrigger,ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
     //state variables to control the audio and video in the navbar and her section

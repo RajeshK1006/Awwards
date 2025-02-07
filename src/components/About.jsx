@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/all";
 
 import AnimatedTitle from "./AnimationTitle";
 
+
 gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
@@ -16,6 +17,7 @@ const About = () => {
         scrub: 0.5,
         pin: true,
         pinSpacing: true,
+        
       },
     });
 
