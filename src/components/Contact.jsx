@@ -1,24 +1,73 @@
 import React from 'react'
 import AnimatedTitle from './AnimationTitle'
 import Button from './Button'
+import { useRef } from 'react'
+import gsap from "gsap"
 
 
 
 
 
-export const ImageClipBox = ( { src, clipClass }) => (
+
+const Contact = () => {
+
+ 
+
+  const frameRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    const element = frameRef.current;
+
+    if (!element) return;
+
+    const rect = element.getBoundingClientRect();
+    const xPos = clientX - rect.left;
+    const yPos = clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((yPos - centerY) / centerY) * -10;
+    const rotateY = ((xPos - centerX) / centerX) * 10;
+
+    gsap.to(element, {
+      duration: 0.3,
+      rotateX,
+      rotateY,
+      transformPerspective: 500,
+      ease: "power1.inOut",
+    });
+  };
+
+  const handleMouseLeave = () => {
+    const element = frameRef.current;
+
+    if (element) {
+      gsap.to(element, {
+        duration: 0.3,
+        rotateX: 0,
+        rotateY: 0,
+        ease: "power1.inOut",
+      });
+    }
+  };
+
+  const ImageClipBox = ( { src, clipClass }) => (
     <div className={clipClass}>
-        <img src={src} alt="image" id="clipping-video" />
+        <img src={src} alt="image" id="clipping-video"  onMouseDown={handleMouseLeave} onMouseEnter={handleMouseLeave} onMouseMove={handleMouseMove} />
     </div>
 )
 
-const Contact = () => {
+
+
   return (
     <div id="contact" className='my-20 min-h-96 w-screen px-10'>
         <div className='relative rounded-lg bg-black py-24 text-blue-50 sm:overflow-hidden'>
             <div className='absolute -left-20 top-0 hidden h-full w-72 overflow-hidden sm:block lg:left-20 lg:w-96'>
-                <ImageClipBox src="/img/contact-1.webp" clipClass="contact-clip-path-1 translate-x-10"/>
+                <ImageClipBox src="/img/contact-1.webp" clipClass="contact-clip-path-1 translate-x-10" />
                 <ImageClipBox
+                
             src="/img/contact-2.webp"
             clipClass="contact-clip-path-2 lg:translate-y-20 translate-y-60 translate-x-10"
           />
@@ -27,10 +76,12 @@ const Contact = () => {
           <ImageClipBox
             src="/img/swordman-partial.webp"
             clipClass="absolute md:scale-125"
+            
           />
           <ImageClipBox
             src="/img/swordman.webp"
             clipClass="sword-man-clip-path md:scale-125"
+            
           />
         </div>
         <div className="flex flex-col items-center text-center">
